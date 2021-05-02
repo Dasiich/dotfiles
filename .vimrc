@@ -1,59 +1,106 @@
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""PLUGINS"""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set directory=.,$TEMP
 set shellslash
 
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""PLUGINS"""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
 " set the runtime path to include Vundle and initialize
-set rtp+=C:/Users/kdubreil/vimfiles/bundle/Vundle.vim
-call vundle#begin('C:/Users/kdubreil/vimfiles/bundle')
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin('$HOME/vimfiles/bundle')
 
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 
+""""""""""""""""""""""""""""""""CONVENIENT"""""""""""""""""""""""""""""""""""""
+" Swap window's positions. Mapped with %
+Plugin 'wesQ3/vim-windowswap'
+
+" Tree Navigator :NERDTREE
 Plugin 'scrooloose/nerdtree'
-Plugin 'scrooloose/syntastic'
+
+" Search file in sub-tree :CtrlP or <Ctrl+P>
 Plugin 'kien/ctrlp.vim'
+
+" A more advanced equivalent of :ls
+Plugin 'jlanzarotta/bufexplorer'
+
+" When open or close braces detects pairs
+Plugin 'jiangmiao/auto-pairs'
+
+""""""""""""""""""""""""""""""""LINUX LIKE"""""""""""""""""""""""""""""""""""""
+" Function ack (as the linux one)
+Plugin 'mileszs/ack.vim'
+
+" Function grep (as the linux one)
+Plugin 'dkprice/vim-easygrep'
+
+""""""""""""""""""""""""""""""""GIT DEDICATED""""""""""""""""""""""""""""""""""
+" Enable git command (as the linux one) :Git order
+Plugin 'tpope/vim-fugitive'
+
+" Perform page layout :Tabularize /{pattern}
+Plugin 'godlygeek/tabular'
+
+"""""""""""""""""""""""""""""LANGUAGE DEDICATED""""""""""""""""""""""""""""""""
+Plugin 'dpelle/vim-LanguageTool'
+" Color in red trailing whitespaces
+Plugin 'bronson/vim-trailing-whitespace'
+
+" C plugin, opening .c/.h file corresponding to the open one :AV
+Plugin 'a.vim'
+
+" Static analyse
+Plugin 'scrooloose/syntastic'
+
+" Generation of skeleton for Doxygen labels :Dox...
+Plugin 'vim-scripts/DoxygenToolkit.vim'
+
+" Syntaxic coloration latex
+Plugin 'vim-latex/vim-latex'
+
+" HTML plugin (@see doc)
+Plugin 'mattn/emmet-vim'
+
+" HJSON
+Plugin 'hjson/vim-hjson'
+
+" Jinja2
+Plugin 'glench/vim-jinja2-syntax'
+
+""""""""""""""""""""""""""""USELESS BUT DISTRACTING""""""""""""""""""""""""""""
+" Themes
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'w0ng/vim-hybrid'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
-Plugin 'wesQ3/vim-windowswap'
-Plugin 'mileszs/ack.vim'
-Plugin 'vim-latex/vim-latex'
-Plugin 'vim-scripts/DoxygenToolkit.vim'
 Plugin 'jpo/vim-railscasts-theme'
 Plugin 'chriskempson/tomorrow-theme'
-"Plugin 'Vimjas/vim-python-pep8-indent'
-"Plugin 'mitsuhiko/vim-jinja'
-"Plugin 'ntpeters/vim-better-whitespace'
-"Plugin 'itchyny/calendar.vim'
-""Plugin 'davidhalter/jedi-vim'
-Plugin 'dkprice/vim-easygrep'
-"Plugin 'scrooloose/nerdcommenter'
-Plugin 'jlanzarotta/bufexplorer'
-Plugin 'tpope/vim-fugitive'
-Plugin 'godlygeek/tabular'
-Plugin 'jiangmiao/auto-pairs'
-Plugin 'mattn/emmet-vim'
-
-
 
 call vundle#end()            " required
 filetype plugin indent on    " required
 
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""CONFIGURATION"""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Vim options
 set hlsearch               " highlight search result
-set ic                     " ignore case
+" set ic                     " ignore case for search
 set incsearch              " incremental search
 set number                 " print line numbers
 set shiftwidth=2           " TAB equals 2 spaces
 set tabstop=2              " ...probably the same thing
 set expandtab              " use spaces, not tabs
 set autoindent             " auto-indentation
-set tw=80                  " default text width: 80 chars
-set colorcolumn=150
+set tw=100                 " default text width: 100 chars
+set colorcolumn=100        " Set a colored colomn at 100 chars (Facilitate tw see)
 set wrap                   " Wrap if the line extends...
 set shm=A                  " do not prompt warning message if the file is
                            " already opened
@@ -63,7 +110,7 @@ set autoread               " re-read the file if it is modified externally
 set scrolloff=3            " toujours afficher au moins 3 lignes au dessus et
                            " en dessous du curseur
 set modeline               " autoriser les modlines
-set foldmethod=indent      " Folding base sur l'indentation
+set foldmethod=syntax      " Folding base sur la syntaxe (parenthèse, crochets)
 " :set foldlevel=100       " deplier tous les folds jusqu'au nv. 100
 set diffopt+=iwhite        " en mode 'diff', ignorer les espaces
 
@@ -71,10 +118,14 @@ set diffopt+=iwhite        " en mode 'diff', ignorer les espaces
 set backspace=2
 set noshellslash
 
+set grepprg=C:/msys64/usr/bin/grep.exe\ -R
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"""""""""""""""""""""""""""""""""""""""THEMES""""""""""""""""""""""""""""""""""""""""
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set guifont=Consolas:h8:cANSI " Set font type and size (far better than the
+                              " inital one)
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""THEMES"""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 syntax enable
 
 " Solarized Dark Ttheme
@@ -103,15 +154,13 @@ colorscheme hybrid
 "colorscheme tomorrow-night-bright
 "colorscheme tomorrow-night-eighties
 
-set guifont=Consolas:h8:cANSI:qDRAFT
+"" Aliases
 
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"""""""""""""""""""""""""""""""""""""""MAPPER""""""""""""""""""""""""""""""""""""""""
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""MAPPER"""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Ack the word under the cursor, prompting a path
-nmap    �       "gyiw:Ack <C-R>g
+nmap    µ       "gyiw:Ack <C-R>g
 
 " Switch windows, one time on the window to move, and a second on the desired
 " position
@@ -123,5 +172,30 @@ nmap  <C-g>     g<C-]>
 " Auto-completion
 nmap  <C-Space> <C-p>
 
+" Remove trailing white spaces on save
+" Use CTRL-S for saving, also in Insert mode
+noremap <C-S> :call RemoveWhiteSpaces()<CR>
+vnoremap <C-S> <C-C>:call RemoveWhiteSpaces()<CR>
+inoremap <C-S> <C-O>:call RemoveWhiteSpaces()<CR>
 
-set tags=F:\k2\tags;
+" Remove trailing white spaces on save an quit
+" Use CTRL-Q for saving and quit, also in Insert mode
+noremap <C-Q> :call RemoveWhiteSpaces()<CR>:q<CR>
+vnoremap <C-Q> :call RemoveWhiteSpaces()<CR>:q<CR>
+inoremap <C-Q> :call RemoveWhiteSpaces()<CR>:q<CR>
+
+" Path for a tags file @
+set tags=F:\k2\bsp0-stm32f4\tags;
+
+" Window navigation
+nnoremap <A-l> :wincmd l<CR>
+nnoremap <A-k> :wincmd k<CR>
+nnoremap <A-j> :wincmd j<CR>
+nnoremap <A-h> :wincmd h<CR>
+
+function! RemoveWhiteSpaces()
+  :%s/\s\+$//e
+  :%s/\t/  /e
+  :set fileencoding=utf-8
+  :update
+endfunction

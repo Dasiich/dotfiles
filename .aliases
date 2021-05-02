@@ -1,0 +1,8 @@
+# Usual commands
+alias c='cd'
+alias l='ls --color'
+alias ls='ls -A --color'
+alias ll='ls -Al --color'
+alias grep='grep --color=always -nI'
+alias gr='grep'
+alias ack='ack --color'
