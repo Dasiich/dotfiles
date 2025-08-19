@@ -1,24 +1,75 @@
 [user]
-	name = 
-	email = 
+	name =
+	email =
+[init]
+	defaultBranch = master
+
 [core]
-  autocrlf = input
-	editor = gvim
+	autocrlf = input
+	editor = vim
+	excludesFile = ~/.gitignore
+	pager = less -x1,5
+
+[color]
+	grep = auto
+	diff = auto
+	status = auto
+	branch = auto
+
+[diff]
+	algorithm = histogram
+	submodule = diff
+#	tool = vimdiff
+	tool = meld
+[difftool]
+	prompt = false
+[difftool "meld"]
+	cmd = meld "$LOCAL" "$REMOTE"
+
 [merge]
-	tool = filemerge
+	tool = meld
+
+[format]
+	pretty = fuller
+
+[pull]
+	rebase = false
+
+[push]
+	default = simple
+
+[log]
+	decorate = full
+
 [alias]
+	diff2 = diff --color-words=.
+	mt = mergetool
+	rc = rebase --continue
+	rcc = "!GIT_EDITOR=true git rebase --continue"
+	rp = "!( RMD=\"$( git rev-parse --git-path 'rebase-merge/' )\" && N=$( cat \"${RMD}msgnum\" ) && L=$( cat \"${RMD}end\" ) && echo \"${N} / ${L}\" ; )"
+	ra = rebase --abort
 	st = status --short
 	co = checkout
 	b = rev-parse --abbrev-ref HEAD
+	fix = "!f() { vim -p `git diff --name-only --diff-filter=U | uniq` -c '/^<<<<<<<\\|^=======$\\|^>>>>>>>'; }; f"
+	k = "!git fetch --prune && gitk --all"
+	lg1	 = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
+	lg2	 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''		  %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
+	lg	  = !"git lg2"
+	listc = "!git diff --name-only --diff-filter=U | uniq"
+	list-local-branches = "!git branch -vv | grep 'origin/.*: gone]' | awk '{print $1}'"
+	mff = "!git merge --ff-only $1 && git reset --hard HEAD@{1} && git merge --no-ff $1"
+	override-local-brach = "!git checkout origin/$1 && git branch -D $1 && git checkout -b $1"
+	rm-local-branches = !"git fetch --prune && git list-local-branches | xargs git branch -D"
+	pullall = "!git checkout develop && git pull && git checkout staging && git pull && git checkout dev_kd && git pull && git checkout develop"
 	pusho = "!git push origin --set-upstream $(git b);"
-  lg1     = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
-  lg2     = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
-  lg      = !"git lg2"
-[credential]
-[winUpdater]
-	recentlySeenVersion = 2.22.0.windows.1
+
 [filter "lfs"]
+	required = true
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
-	required = true
+
+[credential]
+	helper = cache --timeout 21600
+	helper = oauth
