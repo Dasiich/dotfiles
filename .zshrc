@@ -90,6 +90,46 @@ who-installed() {
     dpkg -S "$(command -v "$1")"
 }
 
+# ------------------------------------
+# Interactive directory stack selector
+# ------------------------------------
+
+# Function to jump to a directory from stack
+bd() {
+    local choice
+    if [[ -n $1 ]]; then
+        # Expand tilde and cd
+        cd "${1/#\~/$HOME}" || echo "Directory not found: $1"
+    else
+        # Build directory stack without numbers
+        local dirs_list
+        dirs_list=("${(@f)$(dirs -v | awk '{$1=""; print substr($0,2)}')}")
+        # Interactive selection using fzf (or your choice)
+        choice=$(printf "%s\n" "${dirs_list[@]}" | fzf --height 10 --reverse --prompt="Select dir> ")
+        [[ -n $choice ]] && cd "${choice/#\~/$HOME}"
+    fi
+}
+
+# Function to list directories in the stack
+_bd_menu() {
+    # Get the list of directories from 'dirs -v'
+    local dirs_list
+    # Remove the index numbers from dirs -v output
+    dirs_list=("${(@f)$(dirs -v | awk '{$1=""; print substr($0,2)}')}")
+    # Provide completions for bd
+    compadd -U -M 'r:|=0' -- "${dirs_list[@]}"
+}
+
+# Enable menu selection style for bd
+zstyle ':completion:*:bd:*' menu select
+
+# Associate _bd_menu function with bd command
+compdef _bd_menu bd
+
+# Usage:
+# Type 'bd' and press <TAB> to open a menu to select a directory from the stack.
+# Navigate with arrow keys and hit <Enter> to cd into the chosen directory.
+
 # =====================================================================
 # Environment variables
 # =====================================================================
