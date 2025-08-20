@@ -1,0 +1,30 @@
+general {
+    colors = true
+    interval = 5
+}
+
+order += "time"
+order += "cpu_usage"
+order += "memory"
+order += "disk /"
+order += "battery 0"
+
+cpu_usage {
+    format = "CPU: %usage"
+}
+
+memory {
+    format = "RAM: %used / %total"
+}
+
+disk "/" {
+    format = "Disk: %free"
+}
+
+battery 0 {
+    format = "BAT: %status %percentage"
+}
+
+time {
+    format = "%H:%M:%S - %Y-%m-%d"
+}

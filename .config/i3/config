@@ -1,0 +1,206 @@
+# i3 config file (v4)
+
+# -------------------------
+# Mod key
+# -------------------------
+# Touche Windows
+set $mod Mod4
+
+# -------------------------
+# Font
+# -------------------------
+font pango:Monospace 10
+
+# -------------------------
+# Fond d’écran
+# -------------------------
+exec --no-startup-id feh --bg-scale ~/Pictures/background.jpg
+exec --no-startup-id ~/.config/i3/set_wallpaper.sh
+
+# -------------------------
+# Terminal
+# -------------------------
+bindsym $mod+Return exec i3-sensible-terminal
+
+# -------------------------
+# Kill window
+# -------------------------
+bindsym $mod+Shift+a kill
+bindsym $mod+Shift+q kill
+
+# -------------------------
+# Menu
+# -------------------------
+bindsym $mod+d exec --no-startup-id dmenu_run
+
+# -------------------------
+# Raccourcis workspaces
+# -------------------------
+set $ws1 "1:teams"
+set $ws2 "2:web"
+set $ws3 "3:vim"
+set $ws4 "4:terminal"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8:mails"
+set $ws9 "9:+"
+set $ws10 "10"
+
+# switch to workspace (AZERTY + pavé numérique)
+bindsym $mod+ampersand workspace number $ws1
+bindsym $mod+KP_1 workspace number $ws1
+
+bindsym $mod+eacute workspace number $ws2
+bindsym $mod+KP_2 workspace number $ws2
+
+bindsym $mod+quotedbl workspace number $ws3
+bindsym $mod+KP_3 workspace number $ws3
+
+bindsym $mod+apostrophe workspace number $ws4
+bindsym $mod+KP_4 workspace number $ws4
+
+bindsym $mod+parenleft workspace number $ws5
+bindsym $mod+KP_5 workspace number $ws5
+
+bindsym $mod+minus workspace number $ws6
+bindsym $mod+KP_6 workspace number $ws6
+
+bindsym $mod+egrave workspace number $ws7
+bindsym $mod+KP_7 workspace number $ws7
+
+bindsym $mod+underscore workspace number $ws8
+bindsym $mod+KP_8 workspace number $ws8
+
+bindsym $mod+ccedilla workspace number $ws9
+bindsym $mod+KP_9 workspace number $ws9
+
+bindsym $mod+agrave workspace number $ws10
+bindsym $mod+KP_0 workspace number $ws10
+
+# move focused container to workspace (avec pavé num)
+bindsym $mod+Shift+1 move container to workspace number $ws1
+bindsym $mod+Shift+KP_1 move container to workspace number $ws1
+
+bindsym $mod+Shift+2 move container to workspace number $ws2
+bindsym $mod+Shift+KP_2 move container to workspace number $ws2
+
+bindsym $mod+Shift+3 move container to workspace number $ws3
+bindsym $mod+Shift+KP_3 move container to workspace number $ws3
+
+bindsym $mod+Shift+4 move container to workspace number $ws4
+bindsym $mod+Shift+KP_4 move container to workspace number $ws4
+
+bindsym $mod+Shift+5 move container to workspace number $ws5
+bindsym $mod+Shift+KP_5 move container to workspace number $ws5
+
+bindsym $mod+Shift+6 move container to workspace number $ws6
+bindsym $mod+Shift+KP_6 move container to workspace number $ws6
+
+bindsym $mod+Shift+7 move container to workspace number $ws7
+bindsym $mod+Shift+KP_7 move container to workspace number $ws7
+
+bindsym $mod+Shift+8 move container to workspace number $ws8
+bindsym $mod+Shift+KP_8 move container to workspace number $ws8
+
+bindsym $mod+Shift+9 move container to workspace number $ws9
+bindsym $mod+Shift+KP_9 move container to workspace number $ws9
+
+bindsym $mod+Shift+0 move container to workspace number $ws10
+bindsym $mod+Shift+KP_0 move container to workspace number $ws10
+
+# -------------------------
+# Navigation entre fenêtres
+# -------------------------
+# Focus
+#bindsym $mod+h focus left
+#bindsym $mod+j focus down
+#bindsym $mod+k focus up
+#bindsym $mod+l focus right
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# Reorganize
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# Navigation entre workspaces avec flèches
+bindsym $mod+Ctrl+Right workspace next
+bindsym $mod+Ctrl+Left workspace prev
+
+# Assign workspaces to screens (adapt names eDP-1, HDMI-1, HDMI-2)
+workspace $ws1 output eDP-1
+workspace $ws9 output eDP-1
+workspace $ws2 output HDMI-1
+workspace $ws3 output HDMI-1
+workspace $ws4 output HDMI-1
+workspace $ws5 output HDMI-1
+workspace $ws6 output HDMI-1
+workspace $ws7 output HDMI-1
+workspace $ws8 output HDMI-1
+workspace $ws10 output HDMI-1
+
+# -------------------------
+# Split layout
+# -------------------------
+bindsym $mod+v split v
+bindsym $mod+f fullscreen toggle
+
+# -------------------------
+# Barre i3bar
+# -------------------------
+bar {
+    status_command i3blocks -c ~/.config/i3blocks/config
+    position top
+    font pango:Monospace 10
+    colors {
+        background #282c34
+        statusline #ffffff
+        focused_workspace  #61afef #282c34 #ffffff
+        active_workspace   #98c379 #282c34 #000000
+        inactive_workspace #3e4451 #282c34 #ffffff
+        urgent_workspace   #e06c75 #282c34 #ffffff
+    }
+}
+
+# -------------------------
+# Bordures fenêtres
+# -------------------------
+new_window pixel 4
+new_float pixel 4
+
+client.focused          #7d2350 #237d7d #50237d #7d2350 #444444
+client.unfocused        #222222 #111111 #666666 #111111 #111111
+client.focused_inactive #444444 #333333 #bbbbbb #333333 #333333
+client.urgent           #ffae00 #ff6600 #000000 #ff6600 #ff6600
+
+# -------------------------
+# Redimensionnement
+# -------------------------
+mode "resize" {
+    bindsym h resize shrink width 10 px or 10 ppt
+    bindsym l resize grow width 10 px or 10 ppt
+    bindsym j resize shrink height 10 px or 10 ppt
+    bindsym k resize grow height 10 px or 10 ppt
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+r mode "resize"
+
+# -------------------------
+# Lock session
+# -------------------------
+
+bindsym $mod+l exec --no-startup-id i3lock-fancy
+
+# -------------------------
+# Reload / Exit
+# -------------------------
+bindsym $mod+Shift+c reload
+bindsym $mod+Shift+r restart
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'Exit i3?' -B 'Yes' 'i3-msg exit'"
