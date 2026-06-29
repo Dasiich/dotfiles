@@ -43,6 +43,7 @@
 
 [push]
 	default = simple
+	recurseSubmodules = check
 
 [log]
 	decorate = full
