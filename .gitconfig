@@ -2,7 +2,7 @@
 	name =
 	email =
 [init]
-	defaultBranch = master
+	defaultBranch = main
 
 [core]
 	autocrlf = input
