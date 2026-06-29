@@ -3,6 +3,7 @@
 	email =
 [init]
 	defaultBranch = main
+	templatedir = ~/.git/templates/
 
 [core]
 	autocrlf = input
