@@ -19,15 +19,21 @@
 [diff]
 	algorithm = histogram
 	submodule = diff
-#	tool = vimdiff
 	tool = meld
 [difftool]
 	prompt = false
 [difftool "meld"]
-	cmd = meld "$LOCAL" "$REMOTE"
+	cmd = meld --auto-compare \"$LOCAL\" \"$REMOTE\"
+	dirDiff = true
 
+# Configure merge
 [merge]
 	tool = meld
+[mergetool]
+	prompt = false
+[mergetool "meld"]
+	cmd = meld --auto-compare \"$LOCAL\" \"$BASE\" \"$REMOTE\" --output \"$MERGED\"
+	trustExitCode = true
 
 [format]
 	pretty = fuller
@@ -43,6 +49,7 @@
 
 [alias]
 	diff2 = diff --color-words=.
+	dt = difftool -d
 	mt = mergetool
 	rc = rebase --continue
 	rcc = "!GIT_EDITOR=true git rebase --continue"
